@@ -46,15 +46,15 @@ public class ExtentReportingListener implements ITestListener{
 	 }
 	 
 	 public void onTestStart(ITestResult result) {
+		 logger = extent.createTest(result.getMethod().getMethodName());
 	 }
 	 public void onTestSuccess(ITestResult result) {
-		 logger = extent.createTest(result.getMethod().getMethodName());
+		 
 		 logger.log(Status.PASS, MarkupHelper.createLabel(result.getMethod().getMethodName() , ExtentColor.GREEN));
 		 logger.log(Status.PASS, "DATE USED :-");
 		 logger.log(Status.PASS, convertToString(result.getParameters()));
 	 }
 	 public void onTestFailure(ITestResult result) {
-		 logger = extent.createTest(result.getMethod().getMethodName());
 		 logger.log(Status.FAIL, MarkupHelper.createLabel(result.getMethod().getMethodName() , ExtentColor.RED));
 		 logger.log(Status.FAIL, "DATE USED :-");
 		 logger.log(Status.FAIL, convertToString(result.getParameters()));
@@ -72,7 +72,6 @@ public class ExtentReportingListener implements ITestListener{
 		 result.getMethod().getRetryAnalyzer();
 	 }
 	 public void onTestSkipped(ITestResult result) {
-		 logger = extent.createTest(result.getMethod().getMethodName());
 		 logger.log(Status.SKIP, MarkupHelper.createLabel(result.getMethod().getMethodName() , ExtentColor.YELLOW));
 		 logger.log(Status.SKIP, "DATE USED :-");
 		 logger.log(Status.SKIP, convertToString(result.getParameters()));
@@ -80,7 +79,6 @@ public class ExtentReportingListener implements ITestListener{
 	 public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
 	 }
 	 public void onStart(ITestContext context) {
-		
 		 htmlReporter = new ExtentHtmlReporter("ExtentReport/"+new SimpleDateFormat("yyyy-MM-dd hh-mm-ss-ms").format(new Date())+" report.html");
 		 extent = new ExtentReports ();
 		 extent.attachReporter(htmlReporter);
@@ -92,7 +90,6 @@ public class ExtentReportingListener implements ITestListener{
 		 htmlReporter.config().setDocumentTitle("SAFE AUTOMATION REPORT");
 		 htmlReporter.config().setReportName("SAFE");
 		 htmlReporter.config().setTheme(Theme.DARK);
-		 htmlReporter.config().enableTimeline(false);
 		 htmlReporter.config().setCSS("img.r-img { width: 100px; height: 200px;}");
 	 }
 	 public void onFinish(ITestContext context) {
